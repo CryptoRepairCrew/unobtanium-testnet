@@ -10,7 +10,6 @@
 #include "utilstrencodings.h"
 
 #include <assert.h>
-
 #include <boost/assign/list_of.hpp>
 
 using namespace std;
@@ -51,29 +50,7 @@ static void convertSeed6(std::vector<CAddress> &vSeedsOut, const SeedSpec6 *data
  *    timestamp before)
  * + Contains no strange transactions
  */
-static Checkpoints::MapCheckpoints mapCheckpoints =
-        boost::assign::map_list_of
-        ( 0,        uint256S("0x000004c2fc5fffb810dccc197d603690099a68305232e552d96ccbe8e2c52b75"))
-        ( 10000,    uint256S("0x000000000009cac39f4ba7dc3dc3bdaabcfdfdea35769fa4475ead20982c5ddf"))
-        ( 25000,    uint256S("0x00000000000e71ca092325be6f2049903245deb75a3a90b428ecdd51a2dfae9c"))
-        ( 50000,    uint256S("0x000000000002b1b79ab02f97c7e7e0f219ae648484fa1ba8a6efcac2a19d197a"))
-        ( 100000,   uint256S("0x0000000000040fb1542b598085adf40d9b69f5284f2ef9305cb2071f7714e681"))
-	( 150000,   uint256S("0x00000000000038517177bde8b937af2eed16424e64af730690401e08c8a5e00c"))
-	( 200000,   uint256S("0x0000000000007a29a6d40e353c54d3de868f8f8f47b9cf5834cdcaf0dc214023"))
-	( 250000,   uint256S("0x00000000000002f102d009610190f6bcf356823259600c7cdc8106ba47b3ee89"))
-	( 300000,   uint256S("0x00000000000011c7eec259d9be4694b4460217fc82929ce1e380de371ccf3131"))
-	( 350000,   uint256S("0x00000000000078d00a08c6e655d95cbf5011b10676f1b94a106ddb3b9df62202"))
-        ( 400000,   uint256S("0x0000000000001833336d69645601662b9252d09d64426e518c1bcf22eca46013"))
-        ( 449999,   uint256S("0x000000000000abc7c4e2a51394faa3a6dddbfaf4b8a961724ba47b332356b9de"))	
-        ( 450000,   uint256S("0x00000000000037801b25318e156bd65082c6b25758da742df8a4431a4e3350a0"))
-        ( 450001,   uint256S("0x00000000000031e9eb8de67ba3299f4d2d96fde10349542a6aab48b46d31e35d"))
-        ( 475000,   uint256S("0x0000000000001d0bbf2f2cf5b4994dd13e97a232ef943c3cd6f17270886eefa9"))
-        ( 500000,   uint256S("0x0000000000000e8c9abf99b54350a546e6350443fb418db11205688fa09ab594"))
-        ( 525000,   uint256S("0x0000000000000b5244cf2d5a8836a76fbbc838573710688fa3739686dc129f21"))
-        ( 550000,   uint256S("0x0000000000000c4faf48d3ebafcebe74d016a2e932b634dd88b97588907692e3"))
-        ( 630000,   uint256S("0xf16ef330597e3e6ba6f3e425400433f5bbc8e5eab7ff77744c29a24d6c1a632d"))
-	( 1670000,  uint256S("0xa7f563020cf3965a9e2636df19841fc0327dfd2591856a8850748073c864141e"))
-        ;
+static Checkpoints::MapCheckpoints mapCheckpoints = {};
 static const Checkpoints::CCheckpointData data = {
         &mapCheckpoints,
         1436478823, // * UNIX timestamp of last checkpoint block
@@ -115,10 +92,10 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        pchMessageStart[0] = 0x03;
-        pchMessageStart[1] = 0xd5;
-        pchMessageStart[2] = 0xb5;
-        pchMessageStart[3] = 0x03;
+        pchMessageStart[0] = 0x04;
+        pchMessageStart[1] = 0xd4;
+        pchMessageStart[2] = 0xb4;
+        pchMessageStart[3] = 0x04;
         vAlertPubKey = ParseHex("04fd68acb6a895f3462d91b43eef0da845f0d531958a858554feab3ac330562bf76910700b3f7c29ee273ddc4da2bb5b953858f6958a50e8831eb43ee30c32f21d");
         nDefaultPort = 65534;
         bnProofOfWorkLimit = ~uint256(0) >> 20;
@@ -143,12 +120,12 @@ public:
         genesis.hashPrevBlock.SetNull();
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime    = 1375548986;
+        genesis.nTime    = 1736827244;
         genesis.nBits    = 0x1e0fffff;
-        genesis.nNonce   = 1211565;
+        genesis.nNonce   = 3169760;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256S("0x000004c2fc5fffb810dccc197d603690099a68305232e552d96ccbe8e2c52b75"));
+        assert(hashGenesisBlock == uint256S("0x00000a8b3f52bc5d66214014bff23bf4a670cd9035e70e8414ab6a1b85d592eb"));
         assert(genesis.hashMerkleRoot == uint256S("0x36a192e90f70131a884fe541a1e8a5643a28ba4cb24cbb2924bd0ee483f7f484"));
 
         vSeeds.push_back(CDNSSeedData("node1.unobtanium.uno", "node1.unobtanium.uno"));
@@ -174,7 +151,13 @@ public:
 
     const Checkpoints::CCheckpointData& Checkpoints() const 
     {
-        return data;
+        return {
+            &mapCheckpoints,
+            1436478823, // * UNIX timestamp of last checkpoint block
+            793171,     // * total number of transactions between genesis and last checkpoint
+                    //   (the tx=... number in the SetBestChain debug.log lines)
+            2880        // * estimated number of transactions per day after checkpoint
+        };
     }
 };
 static CMainParams mainParams;
@@ -324,7 +307,13 @@ public:
     const Checkpoints::CCheckpointData& Checkpoints() const 
     {
         // UnitTest share the same checkpoints as MAIN
-        return data;
+        return {
+            &mapCheckpoints,
+            1436478823, // * UNIX timestamp of last checkpoint block
+            793171,     // * total number of transactions between genesis and last checkpoint
+                    //   (the tx=... number in the SetBestChain debug.log lines)
+            2880        // * estimated number of transactions per day after checkpoint
+        };
     }
 
     //! Published setters to allow changing values in unit test cases
